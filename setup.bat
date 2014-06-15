@@ -1,3 +1,2 @@
-set GCALPYTHONPATH=C:\openbox
-
-set PYTHONPATH=%PYTHONPATH%;C:\openbox
+set GCALPYTHONPATH=%cd%
+set PYTHONPATH=%PYTHONPATH%;%cd%
