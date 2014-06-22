@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<game id="menu" width="640" height="480">
+    <webcam x="0" y="0" width="640" height="480" blobs="2" />
+    <cursor src="mousePointer.png" sizeX="32" sizeY="32"/>
+    
+    <screen id="main" update="rect" >
+    <webcam x="0" y="0" width="640" height="480" blobs="2" />
+    <font name="BIG" sys="times" size="20" italic="true"/>
+    <font name="MED" sys="arial" size="60" bold="true" italic="true"/>
+    <font name="VERD" sys="verdana" size="70" bold="true" italic="false"/>
+    <font name="VERD2" sys="verdana" size="60" bold="true" italic="false"/>
+
+	<button id="backButton" x="0" y="22" width="60" height="60">
+		<image id="start" src="button_start.png" frames="20" /> 
+		<image id="idle" src="button_idle.png" frames="1" />
+		<image id="charge" src="button_charge.png" frames="20" />
+		<image id="fire" src="button_fire.png" frames="15" />
+    </button>
+	
+	<button id="forwardButton" x="580" y="22" width="60" height="60">
+		<image id="start" src="button_start.png" frames="20" /> 
+		<image id="idle" src="button_idle.png" frames="1" />
+		<image id="charge" src="button_charge.png" frames="20" />
+		<image id="fire" src="button_fire.png" frames="15" />
+    </button>	
+	
+  </screen>  
+</game>

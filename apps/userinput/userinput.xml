@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<game width="640" id="TestKeyBoard" height="480">
+  <screen id="test" update="all">
+    <image src="doorBG.png" widh="640" height="480" width="0" y="0" x="0" id="background"/>
+    <sprite src="card_star.png" height="40" width="30" y="138" x="237" id="testcard"/>
+  </screen>
+</game>

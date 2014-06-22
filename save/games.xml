@@ -1,0 +1,4 @@
+<games>
+	<game id="userinput" title="UserInputTest" app="UserInputTest" imp="import apps.userinput.userinput" cwd="userinput"
+		  desc="Test of user input"/>
+</games>
