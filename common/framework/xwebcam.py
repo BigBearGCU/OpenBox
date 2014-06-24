@@ -182,13 +182,13 @@ class XWebcamThread(Thread):
             ## Convert buffer to a Pygame Image object
 	    #very slow need some further optimisations I guess we would not need to scale the image if 
 	    #match the res with the window size         
-            if (image):
-                img=image[::-1] 
-                camImage1 = pygame.image.frombuffer(img,(camWidth,camHeight), 'RGB')
+            if (image.any):
+                img=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+                camImage1 = pygame.image.frombuffer(img,(self.camWidth,self.camHeight), 'RGB')
                 if gLinux:
                     if camBuffer:
                         del camBuffer
-                if img:
+                if img.any:
                     del img
                                                  
                 ## Prepare the Image for display
@@ -297,6 +297,8 @@ class XWebcam(pygame.sprite.Sprite):
             #highgui.cvSetCaptureProperty(self.device,highgui.CV_CAP_PROP_FRAME_WIDTH,camWidth)
             #highgui.cvSetCaptureProperty(self.device,highgui.CV_CAP_PROP_FRAME_HEIGHT,camHeight)
             self.device=cv2.VideoCapture(0)
+            self.device.set(3,camWidth)
+            self.device.set(4,camHeight)
             
         self.watch = XWatchArray()
         self.windowRect = None

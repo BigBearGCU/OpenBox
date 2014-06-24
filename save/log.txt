@@ -12,3 +12,7 @@
 25-06-14 00:20:54: Started execution
 25-06-14 00:20:55: Is Button <XButton sprite(in 0 groups)>
 25-06-14 00:20:55: Is Button <XButton sprite(in 0 groups)>
+25-06-14 00:33:36: Started execution
+25-06-14 00:33:38: Is Button <XButton sprite(in 0 groups)>
+25-06-14 00:33:38: Is Button <XButton sprite(in 0 groups)>
+25-06-14 00:33:54: Stopped execution
