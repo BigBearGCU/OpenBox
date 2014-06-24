@@ -5,10 +5,10 @@ import os, sys
 import pygame
 from pygame.locals import *
 
-from lib.common.framework.xglobals import *
-from lib.common.framework.xframework import *
-from lib.common.framework.xxml import xml_load
-from lib.common.framework.xgame import XGame
+from common.framework.xglobals import *
+from common.framework.xframework import *
+from common.framework.xxml import xml_load
+from common.framework.xgame import XGame
 
 class UserInputTest(XGame):
 	
