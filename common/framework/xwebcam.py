@@ -5,7 +5,7 @@
 # This module contains all the functionality to obtain an image from a
 # webcam
 
-import os, sys, Image
+import os, sys
 
 import pygame
 from pygame.locals import *
@@ -23,15 +23,7 @@ from xwatch import XWatchArray
 #
 # Platform setup
 #
-
-if gLinux:
-    if gVideo4Linux:
-        from fg import Device
-    else:
-        from pyvideograb import directvideo
-        from pyvideograb import v4l2_consts
-else:
-    import cv2
+import cv2
 
 #--------------------------------------------------------------------
 #
@@ -163,43 +155,25 @@ class XWebcamThread(Thread):
         
         print "XWebcamThread starting..."
         self.go = True
-        
-        if gLinux and gVideo4Linux2: self.device.startcapture()
 
         while self.go:
             pygame.time.wait(self.sleepTime)
-            if gLinux:
-                if gVideo4Linux:
-                    camBuffer, camWidth, camHeight = self.device.getBuffer()
-                else: # Video4Linus2
-                    camBuffer = self.device.getimage()
-		    #do we need this? some further test will be needed
-                    camBuffer = self.device.yuyv_to_rgb(camBuffer)
-                    img = Image.fromstring('RGB',(camWidth,camHeight),camBuffer)
-            else: # Windows + Mac
-                ret,image=self.device.read()
+            ret,image=self.device.read()
 
             ## Convert buffer to a Pygame Image object
-	    #very slow need some further optimisations I guess we would not need to scale the image if 
-	    #match the res with the window size         
+            #very slow need some further optimisations I guess we would not need to scale the image if 
+            #match the res with the window size         
             if (image.any):
                 img=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
                 camImage1 = pygame.image.frombuffer(img,(self.camWidth,self.camHeight), 'RGB')
-                if gLinux:
-                    if camBuffer:
-                        del camBuffer
                 if img.any:
                     del img
                                                  
                 ## Prepare the Image for display
 
                 #camImage2 = camImage1.convert()
-                if gLinux:
-                    camImage3 = pygame.transform.flip(camImage2, True, self.flip)
-                    camImage4 = pygame.transform.scale(camImage3, self.windowSize)
-                else:
-                    camImage2=pygame.transform.flip(camImage1,True,False)
-                    camImage4=pygame.transform.scale(camImage2, self.windowSize)
+                camImage2=pygame.transform.flip(camImage1,True,False)
+                camImage4=pygame.transform.scale(camImage2, self.windowSize)
                 if camImage1:    
                     del camImage1
                 if camImage2:
@@ -211,8 +185,6 @@ class XWebcamThread(Thread):
                 self.lock.acquire()            
                 self.surface = camImage4
                 self.lock.release()
-            
-        if gLinux and gVideo4Linux2: self.device.stopcapture()
 
         print "XWebcamThread stopped"
 		
@@ -254,51 +226,24 @@ class XWebcam(pygame.sprite.Sprite):
 
         #--------------------------------
         # Setup the Camera
-        # use the first video-device which is found
-        # devnum=1 uses the second one and so on
+        # use the first video-device(0) which is found
+        # 1 uses the second one and so on
 
         try:
-            if gLinux:
-                if gVideo4Linux:
-                    self.device = Device(0)
-                    self.device.setFormat() # This Linux library needs initialise hack
-                else: # Video4Linus2
-                    self.device = directvideo.VideoSource()
-                self.flip = False
-            else: # Windows
-                self.device=cv2.VideoCapture(0)
-                self.flip = True
+            self.device=cv2.VideoCapture(0)
+            self.flip = True
                         
         except:
             print "XWebcam: No webcam connected or webcam failure"
             raise
             exit()
-
-        if gLinux and gVideo4Linux: 
-            res = "tiny" 
-        else: # Windows and video4Linux2
-            res = "high"            
+            
+        res = "high"            
         camWidth, camHeight = self.camSize = gResolutions[res]
         print "Camera Width "+str(camWidth)+" Camera Height"+str(camHeight)
-        if gLinux and gVideo4Linux2:
-            #we need to check if this fails
-	    #if this does then we should try outher pixel formats
-	    if (os.path.exists("/dev/video0")):
-	    	self.device.open(
-                    device="/dev/video0",
-                    width=camWidth,
-                    height=camHeight,
-                    method="m",
-                    input=0,
-                    pixelformat=v4l2_consts.V4L2_PIX_FMT_YUYV
-                )
-        else:
-            #windows and mac
-            #highgui.cvSetCaptureProperty(self.device,highgui.CV_CAP_PROP_FRAME_WIDTH,camWidth)
-            #highgui.cvSetCaptureProperty(self.device,highgui.CV_CAP_PROP_FRAME_HEIGHT,camHeight)
-            self.device=cv2.VideoCapture(0)
-            self.device.set(3,camWidth)
-            self.device.set(4,camHeight)
+        #set the width and height of the camera capture
+        self.device.set(3,camWidth)
+        self.device.set(4,camHeight)
             
         self.watch = XWatchArray()
         self.windowRect = None
@@ -311,7 +256,6 @@ class XWebcam(pygame.sprite.Sprite):
         self.detectStart = gDetectStart
             
     def __del__(self):
-        if gLinux and gVideo4Linux2: self.device.close()
         del self.device
 		
 	##Set Screen Size<br>
