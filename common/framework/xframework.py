@@ -40,6 +40,7 @@ def del_framework():
         log_message("Stopped execution")
         del gFramework
     gFramework = None
+    exit()
     
 
 ## Log messages to the screen and a log file<br>

@@ -20,14 +20,10 @@ elif gMac:
 
 gWebcamFps = 40
 gSaveFps = 3
-gImageFps = 10
+#gImageFps = 10
 
 #--------------------------------------------------------------------
 # Webcam
-
-gVideo4Linux = False        # On Linux whether to use v4l (True) or v4l2 (False) libraries
-gVideo4Linux2 = not gVideo4Linux
-
 gDetectStart = 250         # Give camera a chance to start up before detecting motion
 gMinBlobSize = 4           # Weed out small blobs due to screen flicker
 gMaxBlobSize = 80          # Weed out webcam blitz

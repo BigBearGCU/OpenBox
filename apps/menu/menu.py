@@ -33,18 +33,8 @@ class Menu(XGame):
 		if btn==self.exitButton:
 			self.exit=True
 		if btn==self.startButton:
-			game=self.framework.gameList.getGame("userinput")
-			cwd = os.getcwd()
-			log_message("Current wd "+str(cwd))
-			log_message("Menu: Game app=" + str(game.app) + " cwd=" + str(game.cwd)+" imp="+str(game.imp))
-			excwd = os.path.join(self.framework.appspath, game.cwd)
-			log_message("New wd "+str(excwd))
-			os.chdir(excwd)
-			exec("import apps.userinput.userinput")
-			exe = "eval = " + game.app
-			exec(exe)
-			os.chdir(cwd)
-		
+			self.exit=True
+			
 	def main_loop(self):
 		
 		clock = pygame.time.Clock()
